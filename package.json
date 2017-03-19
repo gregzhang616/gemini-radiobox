@@ -1,0 +1,44 @@
+{
+  "name": "gemini-radiobox",
+  "version": "1.0.0",
+  "description": "A full-featured radiobox jquery plugin",
+  "main": "dist/js/gemini.radiobox.min.js",
+  "scripts": {
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gregzhang616/gemini-radiobox.git"
+  },
+  "keywords": [
+    "jquery-radio",
+    "jquery-radiobox",
+    "jquery",
+    "javascript",
+    "radio",
+    "radiobox",
+    "gemini-radiobox"
+  ],
+  "author": "GregZhang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gregzhang616/gemini-radiobox/issues"
+  },
+  "homepage": "https://github.com/gregzhang616/gemini-radiobox#readme",
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-connect": "^5.0.0",
+    "gulp-load-plugins": "^1.4.0",
+    "gulp-markdown": "^1.2.0",
+    "gulp-markdown-docs": "^0.1.5",
+    "gulp-minify-css": "^1.2.4",
+    "gulp-rename": "^1.2.2",
+    "gulp-sass": "^3.1.0",
+    "gulp-uglify": "^2.0.1"
+  },
+  "dependencies": {
+    "jquery": "^1.12.4"
+  }
+}
