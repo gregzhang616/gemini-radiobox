@@ -18,7 +18,7 @@
     var CLASS_ACTIVE = 'is-active';
     var CLASS_CHECKED = 'checked';
 
-    var Checkbox = function ($el, options) {
+    var Radiobox = function ($el, options) {
         var radiobox = this;
         var core = {
             defaults: {
@@ -52,6 +52,10 @@
                 if (radiobox.defaultValue !== null) core.setValue(radiobox.defaultValue);
                 core.bindEvent();
             },
+            unCreated: function () {
+                var $element = radiobox.$element;
+                if ($element && $element.length > 0) $element.remove();
+            },
             bindEvent: function () {
                 // bind click event for chk wrapper, then the child elements're clicked can bubble to this element
                 radiobox.$element.on(EVENT_NAME_CLICK, function (e) {
@@ -75,6 +79,10 @@
                     core.setValue(value);
                     return false;
                 });
+            },
+            unBindEvent: function () {
+                $el.off(EVENT_NAME_CLICK, radiobox.onClick);
+                $el.off(EVENT_NAME_CHANGE, radiobox.onChange);
             },
             generateRadioBoxDOM: function () {
                 var radiolist = radiobox.radiolist;
@@ -187,7 +195,7 @@
                 if (type === 'radiobox') { // radiobox
                     $inputs.prop('checked', false).siblings('em.gmi-radio-label__icon')
                         .removeClass('checked');
-                    if (value === null) return false;
+                    if (value === null) return radiobox.value = '';
                     if (isBoolean(value)) {
                         if (value) {
                             $icon = $inputs.prop('checked', value).siblings('em.gmi-radio-label__icon');
@@ -211,7 +219,7 @@
                 } else { // radiobutton
                     $inputs.prop('checked', false);
                     $inputs.parents('.gmi-radio-button').removeClass(CLASS_ACTIVE);
-                    if (value === null) return false;
+                    if (value === null) return radiobox.value = '';
                     $inputs.each(function () {
                         var dt = $(this).data(CACHE_RDX_DATA_NAME);
                         var btnDt;
@@ -270,6 +278,12 @@
             core.disableRadioItem(disabled);
         };
 
+        radiobox.destroy = function () {
+            core.unCreated();
+            core.unBindEvent();
+            $el.removeData(NAMESPACE);
+        };
+
         core.init();
     };
 
@@ -280,13 +294,13 @@
         var result;
 
         $self.each(function () {
-            var data = $(this).data('checkbox');
+            var data = $(this).data(NAMESPACE);
             var fn;
             if (!data) {
                 if (/destroy/.test(options)) {
                     return false;
                 }
-                if (!isString(options)) return $(this).data('checkbox', (data = new Checkbox($(this), options)));
+                if (!isString(options)) return $(this).data(NAMESPACE, (data = new Radiobox($(this), options)));
             }
             if (data && isString(options) && $.isFunction(fn = data[options])) {
                 result = fn.apply(data, args);
@@ -294,6 +308,8 @@
         });
         return typeof result === 'undefined' ? $self : result;
     };
+
+    $.fn.radiobox.constructor = Radiobox;
 
     function toArray (obj, offset) {
         var args = [];

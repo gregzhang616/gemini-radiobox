@@ -2,7 +2,7 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>gemini checkbox examples</title>
+    <title>gemini radiobox examples</title>
     <link rel="stylesheet" href="/assets/css/reset.css">
     <link rel="stylesheet" href="/css/gemini.radiobox.min.css">
 </head>
@@ -63,7 +63,7 @@
         <h6>large</h6>
         <div class="gmi-radio-group large">
             <label class="gmi-radio-button is-active is-disabled">
-                <input type="radio" class="gmi-radio-button__chk" name="radio1">
+                <input type="radio" class="gmi-radio-button__chk" name="radio1" id="bj_radio">
                 <span class="gmi-radio-icon-checked gmi-radio-button__txt">北京</span>
             </label>
             <label class="gmi-radio-button is-disabled">
@@ -81,22 +81,30 @@
         </div>
 
         <h5>Examples</h5>
+        <h6>RadioBox</h6>
         <div id="radiobox"></div>
         <button id="reset_radio">Reset</button>
         <button id="disable_radio">Disable</button>
         <button id="set_value_radio">SetValue</button>
         <button id="get_value_radio">GetValue</button>
+
+        <h6>RadioButton</h6>
+        <div id="radiobutton"></div>
+        <button id="reset_radio_btn">Reset</button>
+        <button id="disable_radio_btn">Disable</button>
+        <button id="set_value_radio_btn">SetValue</button>
+        <button id="get_value_radio_btn">GetValue</button>
+        <button id="destroy_radio_btn">Destroy</button>
     </div>
     <script src="/assets/js/jquery.js"></script>
     <script src="/js/gemini.radiobox.js"></script>
     <script>
         $('#radiobox').radiobox({
            radiolist: [
-               {label: '北京', value: 1},
-               {label: '上海', value: 2},
-               {label: '杭州', value: 3},
-               {label: '南京', value: 4}
+               {label: '男', value: 1},
+               {label: '女', value: 2}
            ],
+            disabled: [1],
             size: 'medium',
             onChange: function (e) {
                 console.log('oldValue: ' + e.oldValue);
@@ -104,21 +112,60 @@
             }
         });
 
+        $('#radiobutton').radiobox({
+            type: 'radiobutton',
+            radiolist: [
+                '北京',
+                '上海',
+                '杭州',
+                '南京'
+            ],
+            disabled: ['北京', '上海'],
+            size: 'medium',
+            onChange: function (e) {
+                console.log('oldValue: ' + e.oldValue);
+                console.log('newValue: ' + e.newValue);
+            }
+        });
+
+        // radiobox methods
         $('#reset_radio').on('click', function () {
             $('#radiobox').radiobox('reset');
         });
 
         $('#disable_radio').on('click', function () {
-            $('#radiobox').radiobox('disable', [1, 3]);
+            $('#radiobox').radiobox('disable', []);
         });
 
         $('#set_value_radio').on('click', function () {
-            console.log($('#radiobox').radiobox('setValue', 4));
+            console.log($('#radiobox').radiobox('setValue', 2));
         });
 
         $('#get_value_radio').on('click', function () {
             console.log($('#radiobox').radiobox('getValue'));
         });
+
+        // radiobutton methods
+        $('#reset_radio_btn').on('click', function () {
+            $('#radiobutton').radiobox('reset');
+        });
+
+        $('#disable_radio_btn').on('click', function () {
+            $('#radiobutton').radiobox('disable', ['杭州']);
+        });
+
+        $('#set_value_radio_btn').on('click', function () {
+            console.log($('#radiobutton').radiobox('setValue', '南京'));
+        });
+
+        $('#get_value_radio_btn').on('click', function () {
+            console.log($('#radiobutton').radiobox('getValue'));
+        });
+
+        $('#destroy_radio_btn').on('click', function () {
+            console.log($('#radiobutton').radiobox('destroy'));
+        });
+
     </script>
 </body>
 </html>
